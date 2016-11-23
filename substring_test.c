@@ -9,6 +9,30 @@
 #include "substring.h"
 
 int main() {
-    // put your test code here
+    
+    char *helloWorld = "Hello world";
+    char *helloT = "Hello";
+    char *helloF = "hello";
+    char *loWoT = "lo wo";
+    char *loWoF = "LO WO";
+    
+    int check = 0;
+    
+    check = substring( helloWorld, helloT );
+    assert( check == 1 );
+    check = substring( helloT, helloWorld );
+    assert( check == 1 );
+    
+    check = substring( helloWorld, helloF );
+    assert( check == 0 );
+    
+    check = substring( helloWorld, loWoT );
+    assert( check == 1 );
+    
+    check = substring( helloWorld, loWoF );
+    assert( check == 0 );
+    check = substring( loWoF, helloWorld );
+    assert( check == 0 );
+    
     return 0;
 }
