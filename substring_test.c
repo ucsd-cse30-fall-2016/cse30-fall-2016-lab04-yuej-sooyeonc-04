@@ -15,6 +15,8 @@ int main() {
     char *helloF = "hello";
     char *loWoT = "lo wo";
     char *loWoF = "LO WO";
+    char *emptyString = "";
+    char *nullString = NULL;
     
     int check = 0;
     
@@ -32,6 +34,11 @@ int main() {
     check = substring( helloWorld, loWoF );
     assert( check == 0 );
     check = substring( loWoF, helloWorld );
+    assert( check == 0 );
+    
+    check = substring( emptyString, helloWorld );
+    assert( check == 1 );
+    check = substring( nullString, helloWorld );
     assert( check == 0 );
     
     return 0;
