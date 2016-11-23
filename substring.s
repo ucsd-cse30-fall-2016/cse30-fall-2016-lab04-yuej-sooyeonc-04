@@ -1,3 +1,6 @@
+@ Sooyeon E. Chough (A92093139)
+@ Yue Jiang (A92095681)
+
 .syntax unified
 
 .text
