@@ -17,30 +17,32 @@ substring:
 
     @-----------------------
 
-    @ r4 is count
-    MOV r4, #0
-    @ r5 is s1
-    MOV r5, r0
-    @ r7 is s2
-    MOV r7, r1
-    @ r6 is length of s1
-    MOV r0, r5
+    @ r8 is count for s1
+    MOV r8, #0
+    @ r9 is count for s2
+    MOV r9, #0
+    @ r4 is s1
+    MOV r4, r0
+    @ r6 is s2
+    MOV r6, r1
+    @ r5 is length of s1
+    MOV r0, r4
     BL strlen
-    MOV r6, r0
-    @ r8 is length of s2
-    MOV r0, r7
+    MOV r5, r0
+    @ r7 is length of s2
+    MOV r0, r6
     BL strlen
     MOV r7, r0
 checkEmpty1:
     @ check if s1 is empty string
-    CMP r6, #0
+    CMP r5, #0
     BNE checkEmpty2
     @ if an empty string, return true
     MOV r0, #1
     B end
 checkEmpty2:
     @ check if s2 is empty string
-    CMP r8, #0
+    CMP r7, #0
     BNE notEmpty
     @ if an empty string, return true
     MOV r0, #1
@@ -48,9 +50,9 @@ checkEmpty2:
 notEmpty:
     @ getting first chars of arrays
     @ r0 is s1[ 0 ]
-    LDR r0, [r5, r4]
+    LDR r0, [r4, r8]
     @ r1 is s2[ 0 ]
-    LDR r1, [r7, r4]
+    LDR r1, [r6, r9]
 loop:
 checkNull1:
     @ check if s1 is null
@@ -60,12 +62,36 @@ checkNull1:
     B end
 checkNull2:
     @ check if s2 is null
-    CMP r3, #0
+    CMP r1, #0
     BNE notNull
     MOV r0, #0
     B end
 notNull:
-    @ 
+    @
+
+@ TODO // Does not account for when reach end of s1 AND is a substring (aka when null and right)
+
+checkLength1:
+    @ check if end of loop
+    CMP r, r5
+    BNE checkLength2
+    MOV r0, #0
+    B end
+checkLength2:
+    @ check if end of loop
+    CMP r, r7
+    BNE loopAgain
+    MOV r0, #0
+    B end
+loopAgain:
+    @ not end of loop so increment
+    ADD r, r, #1
+    @ and get next char
+    @ r0 is s1[ count ]
+    LDR r0, [r4, r8]
+    @ r1 is s2[ count ]
+    LDR r1, [r6, r9]
+    B loop
 end:
 
     @-----------------------
