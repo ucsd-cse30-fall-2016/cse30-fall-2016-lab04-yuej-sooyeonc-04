@@ -1,5 +1,8 @@
 /* ********************************
  * CSE 30 - HW 4
+ *
+ * Sooyeon E. Chough (A92093139)
+ * Yue Jiang (A92095681)
  * ********************************/
 
 /* int count(int *arr, int len, int target)
