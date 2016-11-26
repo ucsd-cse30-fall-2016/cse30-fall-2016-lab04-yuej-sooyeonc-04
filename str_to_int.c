@@ -56,7 +56,11 @@ int str_to_int(char * s, int * dest)
     }
     else
     {
-        digit = s[ 0 ] * length;
+        digit = s[ 0 ];
+        for( i = 0; i < length; i++ )
+        {
+            digit = digit * 10;
+        }
         total = total + digit;
     }
     *dest = total;
