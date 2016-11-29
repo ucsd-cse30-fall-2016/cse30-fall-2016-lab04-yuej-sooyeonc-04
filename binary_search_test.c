@@ -6,6 +6,7 @@
  * ********************************/
 
 #include <stdio.h>
+#include <assert.h>
 #include "binary_search.h"
 
 int main(int argc, char ** argv) {
