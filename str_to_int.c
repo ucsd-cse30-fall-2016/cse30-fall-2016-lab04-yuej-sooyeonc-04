@@ -26,7 +26,9 @@ int str_to_int(char * s, int * dest)
     }
     // Getting length of string and initializing other variables
     int length = strlen( s );
-    int ch, total, i, digit = 0;
+    int ch, i = 0;
+    int total = 0;
+    int digit = 0;
     // Making sure has at least one digit
     if( length < 1 )
     {
