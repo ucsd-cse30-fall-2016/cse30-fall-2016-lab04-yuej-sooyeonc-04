@@ -6,6 +6,7 @@
  * ********************************/
 
 #insert <string.h>
+#insert <math.h>
 
 /* int str_to_int(char * s, int * dest)
 *  Args: 
@@ -62,7 +63,10 @@ int str_to_int(char * s, int * dest)
     else
     {
         digit = ch;
-        digit = digit * ( (int) pow( 10, length ) );
+        for( i = 0; i < length; i++ )
+        {
+            digit = digit * 10;
+        }
         total = total + digit;
     }
     *dest = total;
