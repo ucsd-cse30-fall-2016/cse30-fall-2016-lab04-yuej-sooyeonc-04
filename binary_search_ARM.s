@@ -21,11 +21,45 @@
 binary_search_ARM:
     @ We need to save away a bunch of registers
     push    {r4-r11, ip, lr}
-    @ May need to decrement stack pointer for more stack space
+    @ May need to decrement stack pointer for more stack space    
+    SUB sp, sp, #16
+    STR r0, [sp]
+    STR r1, [sp, #4]
+    STR r2, [sp, #8]
+    STR r3, [sp, #12]
+    
+    SUB r6, r3, r2 @end - start
+    LSR r6 @half of r6
+    ADD r6, r2, r6 @mid = (end - start)/2 + start
+    CMP r3, r2
+    BLE return_one
+    
+    LDR r7, [r0, r6] @data[mid]
+    CMP r7, r1
+    BEQ return_mid
+    
+    BLE loop_right
+    BGT loop_left
+    
+    B end
+    
+loop_right:   
+    SUB r6, r6 ,#1
+    MOV r3, r6
+    BL binary_search_ARM
 
-    /* You should probably do something here */
+loop_left:
+    ADD r6, r6, #1
+    MOV r2, r6
+    BL binary_search_ARM
 
-    mov r0, #0
+return_mid:
+    MOV r0, r6
+    
+return_one:
+    MOV r0, #-1
+    
+end:ADD sp, sp, #16
     @ Remember to restore the stack pointer before popping!
     @ This handles restoring registers and returning
     pop     {r4-r11, ip, pc}
