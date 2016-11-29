@@ -23,40 +23,43 @@ int str_to_int(char * s, int * dest)
     }
     // Getting length of string and initializing other variables
     int length = strlen( s );
-    int total, i, digit = 0;
+    int ch, total, i, digit = 0;
     // Making sure has at least one digit
     if( length < 1 )
     {
         return 0;
     }
     // Checking first char for - sign
-    if( s[ i ] != 45 && (s[ i ] < 48 || s[ i ] > 57) )
+    ch = (int) s[ 0 ];
+    if( ch != 45 && (ch < 48 || ch > 57) )
     {
         return 0;
     }       
     // Making sure that s is all 0 - 9
     for( i = 1; i < length; i++ )
     {
-        if( s[ i ] < 48 || s[ i ] > 57 )
+        ch = (int) s[ i ];
+        if( ch < 48 || ch > 57 )
         {
             return 0;
         }
     }
-    // Getting the number except the first 
+    // Getting the number except the first digit
     for( i = 1; i < length; i++ )
     {
-        digit = s[ i ];
+        digit = (int) s[ i ];
         digit = digit - 48;
         total = (total * 10) + digit;
     }
     // Adding the first digit
-    if( s[ 0 ] = 45 )
+    ch = (int) s[ 0 ];
+    if( ch == 45 )
     {
         total = total * -1;
     }
     else
     {
-        digit = s[ 0 ];
+        digit = ch;
         for( i = 0; i < length; i++ )
         {
             digit = digit * 10;
