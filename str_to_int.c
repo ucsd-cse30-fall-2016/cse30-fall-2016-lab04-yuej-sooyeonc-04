@@ -29,13 +29,13 @@ int str_to_int(char * s, int * dest)
     {
         return 0;
     }
-    // Checking first char for - sign
+    // Making sure that first letter is - or 0 - 9
     ch = (int) s[ 0 ];
     if( ch != 45 && (ch < 48 || ch > 57) )
     {
         return 0;
     }       
-    // Making sure that s is all 0 - 9
+    // Making sure that s is all 0 - 9 only
     for( i = 1; i < length; i++ )
     {
         ch = (int) s[ i ];
@@ -60,10 +60,7 @@ int str_to_int(char * s, int * dest)
     else
     {
         digit = ch;
-        for( i = 0; i < length; i++ )
-        {
-            digit = digit * 10;
-        }
+        digit = digit * (pow( 10, length ));
         total = total + digit;
     }
     *dest = total;
