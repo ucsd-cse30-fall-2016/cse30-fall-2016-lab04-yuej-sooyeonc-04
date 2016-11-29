@@ -63,7 +63,8 @@ int str_to_int(char * s, int * dest)
     else
     {
         digit = ch;
-        for( i = 0; i < length; i++ )
+        digit = digit - 48;
+        for( i = 1; i < length; i++ )
         {
             digit = digit * 10;
         }
