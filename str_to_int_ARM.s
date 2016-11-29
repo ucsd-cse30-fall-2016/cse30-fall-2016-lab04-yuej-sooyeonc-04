@@ -28,10 +28,16 @@ str_to_int:
     BEQ end
     
     CMP r1, #0
+    MOVEQ r0, #0 @return 0 to indicate unsuccessful conversion
+    
+    CMP r1, #0
     BEQ end       @if either parameter is NULL, return 0
     
     BL strlen     @length = strlen(s)
     MOV r2, r0    @now r2 stores length
+    CMP r2, #1
+    MOVLT r0, #0
+    
     CMP r2, #1
     BLT end       @if length < 1, return 0
     
@@ -39,7 +45,7 @@ str_to_int:
     CMP r3, #45
     BNE first_value_comparison
     
-    MOV r4, #0    @i = 0
+    MOV r4, #1    @i = 1
     CMP r4, r2    @i < length @QUESTION: why in your c code it's i < length instead of i<=length?
     BLE loop 
     B out_of_loop
@@ -57,9 +63,9 @@ loop:
 
 out_of_loop:    
     MOV r5, #0    @total is stored in r5
-    MOV r4, #0    @i = 0
+    MOV r4, #1    @i = 1
     CMP r4, r2 
-    BLE loop_conversion @same QUESTION: should it be BLE or BLT
+    BLE loop_conversion  @I used BLE here (?)
     B out_of_loop_conversion
     
 loop_conversion:
@@ -76,11 +82,25 @@ out_of_loop_coversion:
     CMP r3, #45
     MULEQ r5, r5, #-1
     
+    MOV r4, #0
+    CMP r4, r2
+    BLT digit_loop
+    B out_of_digit_loop
     
+digit_loop:
+    MUL r3, r3, #10 @if i < length then digit  = digit * 10
+    ADD r4, r4, #1
+    CMP r4, r2
+    BLT digit_loop
+
+out_of_digit_loop:
+    ADD r5, r5, r3
+    STR r5, [r1] @should I use STR instead of STRB here?
+    MOV r0, #1
     
+end:
+    ret  @should I have this ret here?
     
-    /* Return back to calling function */
-    mov r0, #0
     @ This handles restoring registers and returning
     pop     {r4-r11, ip, pc}
 
