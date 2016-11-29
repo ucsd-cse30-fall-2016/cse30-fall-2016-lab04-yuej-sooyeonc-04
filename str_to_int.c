@@ -32,13 +32,13 @@ int str_to_int(char * s, int * dest)
     // Making sure has at least one digit
     if( length < 1 )
     {
-        return 0;
+        return total;
     }
     // Making sure that first letter is - or 0 - 9
     ch = (int) s[ 0 ];
     if( ch != 45 && (ch < 48 || ch > 57) )
     {
-        return 0;
+        return total;
     }       
     // Making sure that s is all 0 - 9 only
     for( i = 1; i < length; i++ )
@@ -46,7 +46,7 @@ int str_to_int(char * s, int * dest)
         ch = (int) s[ i ];
         if( ch < 48 || ch > 57 )
         {
-            return 0;
+            return total;
         }
     }
     // Getting the number except the first digit
@@ -64,8 +64,7 @@ int str_to_int(char * s, int * dest)
     }
     else
     {
-        digit = ch;
-        digit = digit - 48;
+        digit = ch - 48;
         for( i = 1; i < length; i++ )
         {
             digit = digit * 10;
