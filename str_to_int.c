@@ -5,6 +5,8 @@
  * Yue Jiang (A92095681)
  * ********************************/
 
+#insert <string.h>
+
 /* int str_to_int(char * s, int * dest)
 *  Args: 
 *       char * s: the string to change into int
@@ -17,7 +19,7 @@
 int str_to_int(char * s, int * dest)
 {
     // Making sure neither are null
-    if( s == NULL || dest == NULL )
+    if( s == 0 || dest == 0 )
     {
         return 0;
     }
@@ -60,7 +62,7 @@ int str_to_int(char * s, int * dest)
     else
     {
         digit = ch;
-        digit = digit * (pow( 10, length ));
+        digit = digit * ( (int) pow( 10, length ) );
         total = total + digit;
     }
     *dest = total;
