@@ -41,7 +41,9 @@ str_to_int:
     
     MOV r4, #0    @i = 0
     CMP r4, r2    @i < length @QUESTION: why in your c code it's i < length instead of i<=length?
-    BLE loop
+    BLE loop 
+    B out_of_loop
+    
     
 loop:
     LDRB r3, [r0, r4]
@@ -53,7 +55,23 @@ loop:
     CMP r4, r2
     BLE loop
 
-out_of_loop:
+out_of_loop:    
+    MOV r5, #0    @total is stored in r5
+    MOV r4, #0    @i = 0
+    CMP r4, r2 
+    BLE loop_conversion @same QUESTION: should it be BLE or BLT
+    B out_of_loop_conversion
+    
+loop_conversion:
+    LDRB r3, [r0, r4]
+    SUB r3, r3, #48
+    MUL r5, r5, #10
+    ADD r5, r5, r3
+    ADD r4, r4, #1
+    CMP r4, r2
+    BLE loop_conversion
+
+    
     
     
     /* Return back to calling function */
