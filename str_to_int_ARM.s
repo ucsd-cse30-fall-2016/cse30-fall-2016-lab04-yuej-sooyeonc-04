@@ -35,7 +35,7 @@ str_to_int:
     CMP r2, #1
     BLT end       @if length < 1, return 0
     
-    LDR r3, [r0]  @r3 temporarily stores the first value of the input string
+    LDRB r3, [r0]  @r3 temporarily stores the first value of the input string
     CMP r3, #45
     BNE first_value_comparison
     
@@ -71,6 +71,11 @@ loop_conversion:
     CMP r4, r2
     BLE loop_conversion
 
+out_of_loop_coversion:
+    LDRB r3, [r0]
+    CMP r3, #45
+    MULEQ r5, r5, #-1
+    
     
     
     
