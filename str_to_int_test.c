@@ -21,12 +21,16 @@ int main(int argc, char ** argv) {
     }
     
     str_to_int( "-012", &a );
+    printf("%d\n", a);
     assert( a == -012 );
     str_to_int( "9153295", &a );
+    printf("%d\n", a);
     assert( a == 9153295 );
     str_to_int( "10a8", &a );
+    printf("%d\n", a);
     assert( a == 0 );
     str_to_int( "1075-2", &a );
+    printf("%d\n", a);
     assert( a == 0 );
     
     return 0;
