@@ -24,7 +24,7 @@ int main(int argc, char ** argv) {
     assert( a == -012 );
     str_to_int( "9153295", &a );
     assert( a == 9153295 );
-    str_to_int( "a108b", &a );
+    str_to_int( "10a8", &a );
     assert( a == 0 );
     str_to_int( "1075-2", &a );
     assert( a == 0 );
