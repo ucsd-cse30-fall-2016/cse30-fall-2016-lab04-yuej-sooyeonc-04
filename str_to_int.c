@@ -5,8 +5,8 @@
  * Yue Jiang (A92095681)
  * ********************************/
 
-#insert <string.h>
-#insert <math.h>
+#include <string.h>
+#include <math.h>
 
 /* int str_to_int(char * s, int * dest)
 *  Args: 
