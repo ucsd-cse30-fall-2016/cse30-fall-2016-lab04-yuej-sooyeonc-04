@@ -18,6 +18,9 @@
 .func binary_search_ARM, binary_search_ARM
 .type binary_search_ARM, %function
 
+@questions: do we have to necessarily push r4-r11? 
+@what if I'm storing the updated value in stack in registor r0-r3?
+
 binary_search_ARM:
     @ We need to save away a bunch of registers
     push    {r4-r11, ip, lr}
