@@ -27,9 +27,9 @@ majority_count_ARM:
     push    {r4-r11, ip, lr}
     @ May want to decrement stack pointer for more space   
     SUB sp, sp, #16 @ r0, r1, r2, r4 -> majority_count/c
-    STR r0, [sp]
-    STR r1, [sp, #4]
-    STR r2, [sp, #8]
+    STR r0, [sp] @stores arr
+    STR r1, [sp, #4] @stores len
+    STR r2, [sp, #8] @stores result
     
     CMP r1, #0
     BEQ return_0
@@ -39,8 +39,8 @@ majority_count_ARM:
     MOV r7, r1 @keep a copy of original len
     MOV r3, r0 @keep a copy of original arr
     
-    MOV r6, #0 @left_majority_count
-    MOV r7, #0 @right_majority_count
+    MOV r5, #0 @left_majority address
+    MOV r6, #0 @right_majority address
     
     LSL r1 @get len/2
     
@@ -60,8 +60,15 @@ majority_count_ARM:
 c_left:
     MOV r0, r3
     MOV r1, r7
-    MOV r2, r5
-    BL count
+    LDR r2, [r5]
+    BL count @r0 stores c right now
+    MOV r1, r7
+    LSL r1 @len/2
+    LDR r2, [r5] @load left_majority
+    CMP r3, #0
+    STRNE r2, [sp, #8] @*result = left_majority
+    
+    
     
    
 mov r0, #0
