@@ -6,6 +6,7 @@
  * ********************************/
 
 #include <stdio.h>
+#include <assert.h>
 
 int str_to_int(char * str, int * dest);
 
