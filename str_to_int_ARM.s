@@ -24,8 +24,13 @@ str_to_int:
     @ We need to save away a bunch of registers
     push    {r4-r11, ip, lr}
 
-    /* Your code goes here */
-
+    CMP r0, #0
+    BEQ end
+    
+    CMP r1, #0
+    BEQ end @if either parameter is NULL, return 0
+    
+    BL ss
     /* Return back to calling function */
     mov r0, #0
     @ This handles restoring registers and returning
