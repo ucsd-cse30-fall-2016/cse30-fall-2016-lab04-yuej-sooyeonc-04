@@ -6,6 +6,7 @@
  * ********************************/
 
 #include <stdio.h>
+#include <assert.h>
 #include "substring.h"
 
 int main() {
