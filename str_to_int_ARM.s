@@ -23,12 +23,12 @@
 str_to_int:
     @ We need to save away a bunch of registers
     push    {r4-r11, ip, lr}
-
+    
+    MOV r7, r0 @use r7 to stores input string because r0 needs to be set to 0 to indicate conversion failed
+    MOV r0, #0
+    
     CMP r0, #0
     BEQ end
-    
-    CMP r1, #0
-    MOVEQ r0, #0 @return 0 to indicate unsuccessful conversion
     
     CMP r1, #0
     BEQ end       @if either parameter is NULL, return 0
@@ -36,12 +36,9 @@ str_to_int:
     BL strlen     @length = strlen(s)
     MOV r2, r0    @now r2 stores length
     CMP r2, #1
-    MOVLT r0, #0
-    
-    CMP r2, #1
     BLT end       @if length < 1, return 0
     
-    LDRB r3, [r0]  @r3 temporarily stores the first value of the input string
+    LDRB r3, [r7]  @r3 temporarily stores the first value of the input string
     CMP r3, #45
     BNE first_value_comparison
     
@@ -52,7 +49,7 @@ str_to_int:
     
     
 loop:
-    LDRB r3, [r0, r4]
+    LDRB r3, [r7, r4]
     CMP r3, #48
     BLT end
     CMP r3, #57
@@ -69,7 +66,7 @@ out_of_loop:
     B out_of_loop_conversion
     
 loop_conversion:
-    LDRB r3, [r0, r4]
+    LDRB r3, [r7, r4]
     SUB r3, r3, #48
     MUL r5, r5, #10
     ADD r5, r5, r3
@@ -78,7 +75,7 @@ loop_conversion:
     BLE loop_conversion
 
 out_of_loop_coversion:
-    LDRB r3, [r0]
+    LDRB r3, [r7]
     CMP r3, #45
     MULEQ r5, r5, #-1
     
