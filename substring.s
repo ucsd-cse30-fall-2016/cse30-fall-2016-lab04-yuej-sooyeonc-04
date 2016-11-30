@@ -17,6 +17,12 @@ substring:
     push {r4-r11, ip, lr}
 
     @-----------------------
+    
+    @ null check for either string
+    CMP r0, #0
+    BEQ endFalse
+    CMP r1, #0
+    BEQ endFalse
 
     @ r6 is count1 for s1
     MOV r6, #0
@@ -40,13 +46,11 @@ substring:
     @ check if s1 is empty string
     CMP r5, #0
     BNE checkEmpty
-    @ if an empty string, return true
     B endTrue
 checkEmpty:
     @ check if s2 is empty string
     CMP r8, #0
     BNE lengthComparison
-    @ if an empty string, return true
     B endTrue
 
 lengthComparison:
@@ -76,17 +80,16 @@ shorterFirst:
 searchLoopStart:
     @ loop condition 
     CMP r9, r10
-    LGE endFail 
+    LGT endFalse 
     @ getting char from string
     @ r1 is s2[ count2 ]
     LDRB r1, [ r7, r9 ]
     @ comparing s1[ 0 ] and s2[ count2 ]
     CMP r0, r1
-    BEQ searchLoopDone
+    BEQ comparisonLoopStart
     @ incrementing count2 
     ADD r9, r9, #1
     B seachLoopStart
-searchLoopDone:
 
 @ checking each s1[ count1 ] to s2[ count2 ]
 comparisonLoopStart:
@@ -97,15 +100,16 @@ comparisonLoopStart:
     LDRB r0, [ r4, r6 ]
     @ r1 is s2[ count 2 ]
     LDRB r1, [ r7, r9 ]
+    @ checking if two char are the same
     CMP r0, r1
-    BNE endFail
+    BNE endFalse
     @ incrementing count1 and count2
-    ADD r9, r9, #1
     ADD r6, r6, #1
+    ADD r9, r9, #1
     B comparisonLoopStart
     
 @ if true or false
-endFail:
+endFalse:
     MOV r0, #0
     B end
 endTrue:
