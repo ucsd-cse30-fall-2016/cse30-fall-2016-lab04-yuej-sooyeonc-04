@@ -28,7 +28,7 @@ int main(int argc, char ** argv) {
     printf("Should be: 0 - Is: %d\n", c);
     str_to_int( "1075-2", &d );
     printf("Should be: 0 - Is: %d\n", d);
-    str_to_int( "", %e );
+    str_to_int( "", &e );
     printf("Should be: 0 - Is: &d\n", e);
     
     return 0;
