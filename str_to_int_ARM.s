@@ -86,7 +86,7 @@ loop_conversion:
     CMP r4, r2
     BLE loop_conversion
 
-out_of_loop_coversion:
+out_of_loop_conversion:
     LDRB r3, [r7]
     CMP r3, #45
     MOV r0, #-1
