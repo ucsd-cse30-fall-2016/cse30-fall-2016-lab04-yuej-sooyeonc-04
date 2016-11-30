@@ -18,11 +18,11 @@ int main(int argc, char ** argv) {
     printf("C   Binary Search: %d\n", binary_search(data, 4, 0, 9));
     printf("ARM Binary Search: %d\n", binary_search_ARM(data, 4, 0, 9));
     
-    x = binary_search( data, 3, 0, 4 );
+    x = binary_search_ARM( data, 3, 0, 4 );
     printf( "Should be: 1 - Is: %d\n", x );
     x = binary_search_ARM( data, 5, 0, 4 );
     printf( "Should be: 2 - Is: %d\n", x );
-    x = binary_search( data, 2, 0, 4 );
+    x = binary_search_ARM( data, 2, 0, 4 );
     printf( "Should be: -1 - Is: %d\n", x );
     x = binary_search_ARM( data, 6, 0, 4 );
     printf( "Should be: -1 - Is: %d\n", x );
