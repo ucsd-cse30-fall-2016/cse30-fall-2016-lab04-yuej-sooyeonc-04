@@ -21,9 +21,56 @@
 .type str_to_int, %function
 
 str_to_int:
-    @ We need to save away a bunch of registers
-    push    {r4-r11, ip, lr}
+
+    @ Saving registers
+    push {r4-r11, ip, lr}
     
+    @ - - - - - - - - - - 
+    
+    @ r7 is copy of s
+    MOV r7, r0
+    @ r8 is copy of dest
+    MOV r8, r1
+    
+    @ making sure neither s nor dest is null
+    CMP r0, #0
+    BNE notNullOne
+    MOV r0, #0
+    STR r1, #0
+    B end
+notNullOne:
+    CMP r1, #0
+    BNE notNullEither
+    MOV r0, #0
+    STR r1, #0
+    B end
+notNullEither:
+    @ getting string length of s
+    MOV r0, r7
+    BX strlen
+    @ r2 is length of s
+    MOV r2, r0
+    @ r0 is s 
+    MOV r0, r7
+    
+    @ making sure s is longer than one
+    CMP r2, #1
+    BGE longEnough
+    MOV r0, #0
+    STR r1, #0
+    B end
+    
+longEnough:
+    @ r3 is i
+    MOV r3, #0
+    @ r4 is digit
+    MOV r4, #0
+    @ r5 is total
+    MOV r5, #0
+    
+end:
+    
+    @ - - - - - - - - - -
     MOV r7, r0 @use r7 to stores input string because r0 needs to be set to 0 to indicate conversion failed
     MOV r0, #0
     
