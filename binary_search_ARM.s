@@ -28,7 +28,7 @@ binary_search_ARM:
     SUB sp, sp, #8 @it has to decrement one line as 8 bytes but we will only use mid in this case
     
     SUB r6, r3, r2 @end - start
-    LSR r6 @half of r6
+    LSR r6, r6, #1 @half of r6
     ADD r6, r2, r6 @mid = (end - start)/2 + start
     STR r6, [sp] @stack pointer is now storing the new value of mid
     
