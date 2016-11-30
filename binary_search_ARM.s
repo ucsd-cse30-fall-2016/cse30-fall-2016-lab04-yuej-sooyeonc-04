@@ -47,18 +47,18 @@ binary_search_ARM:
     BGT search_left
 
 search_right:
-    ADD r2, r0, #1
+    ADD r2, r3, #1
     MOV r0, r4
     MOV r1, r5
     MOV r3, r7
-    BL binary_search
+    BL binary_search_ARM
 
 search_left:
-    SUB r3, r0, #1 @mid - 1 is now at r3
+    SUB r3, r3, #1 @mid - 1 is now at r3
     MOV r0, r4
     MOV r1, r5
     MOV r2, r6
-    BL binary_search
+    BL binary_search_ARM
 
 return_neg_one:
     MOV r0, #-1
