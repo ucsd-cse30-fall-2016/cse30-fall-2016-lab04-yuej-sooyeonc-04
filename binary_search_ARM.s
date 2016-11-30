@@ -23,48 +23,57 @@ binary_search_ARM:
 
     @ - - - - - - - - - - 
     
-    @ r4 is mid
-    SUB r4, r2, r3
-    ADD r4, r5, r2
-    LSR r4, r5, #1
+    MOV r4, r0 @*data
+    MOV r5, r1 @toFind
+    MOV r6, r2 @start
+    MOV r7, r3 @end
 
-    @ base case
-    CMP r2, r3
-    BGT notHere
+    SUB sp, sp, #8 @allocate one line for mid
 
-    @ r5 is data[ mid ]
-    LDR r5, [r0, r4]
+    SUB r0, r7, r6
+    LSR r0, r0, #1 @get (end - start)/2
+    ADD r3, r6, r0 @now mid at r3 = start + (end - start)/2
+    STR r3, [sp] @store mid into stack
 
-    @ if equal to value
-    CMP r5, r1
-    BEQ equalTo
-    BLT lessThan
-    BGT greaterThan
+    CMP r6, r7
+    BGT return_neg_one
 
-equalTo:
+    LDR r0, [r4, r3] @now r0 stores data[mid]
+
+    CMP r0, r5
+    BEQ return_mid
+
+    CMP r0, r5
+    BGT search_left
+
+search_right:
+    ADD r2, r0, #1
     MOV r0, r4
+    MOV r1, r5
+    MOV r3, r7
+    BL binary_search
     B end
 
-lessThan:
-    ADD r4, r4, #1
-    MOV r2, r4
-    B end
+search_left:
+    SUB r3, r0, #1 @mid - 1 is now at r3
+    MOV r0, r4
+    MOV r1, r5
+    MOV r2, r6
+    BL binary_search
 
-greaterThan:
-    SUB r4, r4, #1
-    MOV r2, r4
-    B end
-    
-notHere:
+return_neg_one:
     MOV r0, #-1
     B end
 
+return_mid:
+    LDR r0, [sp]
+
 end:
+    ADD sp, sp, #8
 
     @ - - - - - - - - - -
    
     pop     {r4-r11, ip, pc}
-    BX lr
 
 .endfunc
 
