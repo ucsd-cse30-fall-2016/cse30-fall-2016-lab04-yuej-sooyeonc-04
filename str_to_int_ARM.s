@@ -112,7 +112,29 @@ digitCheckMid1:
 digitCheckMid2:
     @ incrementing i
     ADD r3, r3, #i
+    B digitCheckEnd
 digitCheckEnd:
+
+    @ r10 is #10
+    MOV r10, #10
+    @ resetting i to 1
+    MOV r3, #1
+totalLoop:
+    @ loop condition
+    CMP r3, r2
+    BGE totalLoopEnd
+    @ getting digit
+    LDRB r4, [r0, r3]
+    @ turning into 0 - 9
+    SUB r4, r4, #48
+    @ multiplying total by 10
+    MUL r5, r5, r10
+    @ adding the digit to changed total
+    ADD r5, r5, r4
+    @ incrementing loop
+    ADD r3, r3, #1
+    B totalLoop:
+totalLoopEnd:
     
 end:
     
