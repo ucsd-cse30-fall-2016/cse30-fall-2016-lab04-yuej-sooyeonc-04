@@ -42,7 +42,8 @@ loop:
     BGT loop
 
     MOV r0, r4
-    
+    pop     {r4-r11, ip, pc}
+
 .endfunc
 
 .align 8
