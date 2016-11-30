@@ -40,7 +40,7 @@ majority_count_ARM:
     SUB sp, sp, #16
     LSR r1, r1, #1 @len/2
     ADD r2, sp, #12
-    BL majority_count
+    BL majority_count_ARM
     MOV r3, r0 @now r3 stores left_majority_count
     STR r0, [sp]
 
@@ -48,7 +48,7 @@ majority_count_ARM:
     ADD r0, r0, r1
     SUB r1, r5, r1
     ADD r2, sp, #16
-    BL majority_count
+    BL majority_count_ARM
     STR r0, [sp, #4]
     @r0 still stores right_majority_count
 
