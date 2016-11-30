@@ -18,6 +18,34 @@
 /* that memory location before returning. */
 
 .align 8
+.global count_ARM
+.func count_ARM, count_ARM
+.type count_ARM, %function
+
+count_ARM:
+
+    push {r4-r11, ip, lr}
+    
+    @parameters:arr, len, &majority element
+    
+    MOV r4, #0 @use r4 to store count
+    LDR r5, [r2]
+    CMP r1, #0
+    BGT loop
+    
+loop:
+    LDR r3, [r0], #4
+    CMP r3, r5
+    ADDEQ r4, r4, #1
+    SUB r1, r1, #1
+    CMP r1, #0
+    BGT loop
+
+    MOV r0, r4
+    
+.endfunc
+
+.align 8
 .global majority_count_ARM
 .func majority_count_ARM, majority_count_ARM
 .type majority_count_ARM, %function
@@ -62,7 +90,7 @@ loop_left:
     MOV r0, r4
     MOV r1, r5
     LDR r2, [sp, #20]
-    BL count
+    BL count_ARM
     STR r0, [sp, #12]
     LSR r1, r1, #1
     CMP r0, r1
@@ -77,7 +105,7 @@ loop_right:
     MOV r0, r4
     MOV r1, r5
     LDR r2, [sp, #16]
-    BL count
+    BL count_ARM
     STR r0, [sp, #12]
     LSR r1, r1, #1
     CMP r0, r1
