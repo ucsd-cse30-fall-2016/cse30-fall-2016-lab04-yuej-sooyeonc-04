@@ -26,52 +26,80 @@ majority_count_ARM:
     @ We need to save away a bunch of registers
     push    {r4-r11, ip, lr}
     @ May want to decrement stack pointer for more space   
-    SUB sp, sp, #16 @ r0, r1, r2, r4 -> majority_count/c
-    STR r0, [sp] @stores arr
-    STR r1, [sp, #4] @stores len
-    STR r2, [sp, #8] @stores result
     
     CMP r1, #0
     BEQ return_0
     CMP r1, #1
     BEQ return_one
-    
-    MOV r7, r1 @keep a copy of original len
-    MOV r3, r0 @keep a copy of original arr
-    
-    MOV r5, #0 @left_majority address
-    MOV r6, #0 @right_majority address
-    
-    LSL r1 @get len/2
-    
-    MOV r2, r5
-    BL majority_count_ARM
-    
-    ADD r0, r0, r1
-    SUB r1, r7, r1 @len-len/2
-    MOV r2, r6
-    BL majority_count_ARM
-    
-    CMP r5, #0
-    BNE c_left
-    CMP r6, #0
-    BNE c_right
 
-c_left:
-    MOV r0, r3
-    MOV r1, r7
-    LDR r2, [r5]
-    BL count @r0 stores c right now
-    MOV r1, r7
-    LSL r1 @len/2
-    LDR r2, [r5] @load left_majority
-    CMP r3, #0
-    STRNE r2, [sp, #8] @*result = left_majority
+    MOV r4, r0
+    MOV r5, r1
+    MOV r6, r2
+
+
+    SUB sp, sp, #16
+    LSR r1 @len/2
+    ADD r2, sp, #12
+    BL majority_count
+    MOV r3, r0 @now r3 stores left_majority_count
+    STR r0, [sp]
+
+    SUB sp, sp, #8
+    ADD r0, r0, r1
+    SUB r1, r5, r1
+    ADD r2, sp, #16
+    BL majority_count
+    STR r0, [sp, #4]
+    @r0 still stores right_majority_count
+
+    CMP r3, #1
+    BEQ loop_left
+
+    CMP r0, #1
+    BEQ loop_right
+
+loop_left:
+	MOV r0, r4
+    MOV r1, r5
+    LDR r2, [sp, #20]
+    BL count
+    STR r0, [sp, #12]
+    LSR r1
+    CMP r0, r1
+    BLE skip_left
+    CMP r6, #1
+    STREQ r2, [r6]
+    B return_c
+
+skip_left:
+
+loop_right:
+	MOV r0, r4
+    MOV r1, r5
+    LDR r2, [sp, #16]
+    BL count
+    STR r0, [sp, #12]
+    LSR r1
+    CMP r0, r1
+    BLE skip_right
+    CMP r6, #1
+    STREQ r2, [r6]
+    B return_c
+
+skip_right:
+
+return_0:
+    MOV r0, #0
+
+return_one:
+    MOV r0, #1
+    B end
     
+return_c:
+    LDR r0, [sp, #12]
     
-    
-   
-mov r0, #0
+end:
+
     @ Remember to restore your stack pointer before popping!
     @ This handles restoring registers and returning
     pop     {r4-r11, ip, pc}
