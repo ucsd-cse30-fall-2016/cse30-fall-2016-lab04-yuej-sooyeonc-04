@@ -81,11 +81,8 @@ majority_count_ARM:
     STR r0, [sp, #4]
     @r0 still stores right_majority_count
 
-    CMP r3, #1
-    BEQ loop_left
-
-    CMP r0, #1
-    BEQ loop_right
+    CMP r3, #0
+    BEQ skip_left
 
 loop_left:
     MOV r0, r4
@@ -96,12 +93,16 @@ loop_left:
     LSR r1, r1, #1
     CMP r0, r1
     BLE skip_left
-    CMP r6, #1
-    STREQ r2, [r6]
+    CMP r6, #0
+    STRNE r2, [r6]
     B return_c
 
 skip_left:
 
+    LDR r0, [sp, #4]
+    CMP r0, #0
+    BEQ skip_right
+    
 loop_right:
     MOV r0, r4
     MOV r1, r5
@@ -111,18 +112,29 @@ loop_right:
     LSR r1, r1, #1
     CMP r0, r1
     BLE skip_right
-    CMP r6, #1
-    STREQ r2, [r6]
+    CMP r6, #0
+    STRNE r2, [r6]
     B return_c
 
 skip_right:
 
 return_0:
     MOV r0, #0
+    B end
 
 return_one:
+    CMP r2, #0
+    BNE result
+    
+back_return_one:
+
     MOV r0, #1
     B end
+    
+result:
+    LDR r3, [r0]
+    STR r3, [r2]
+    B back_return_one
     
 return_c:
     LDR r0, [sp, #12]
