@@ -99,7 +99,8 @@ return_c:
     LDR r0, [sp, #12]
     
 end:
-
+    ADD sp, sp, #24
+    
     @ Remember to restore your stack pointer before popping!
     @ This handles restoring registers and returning
     pop     {r4-r11, ip, pc}
