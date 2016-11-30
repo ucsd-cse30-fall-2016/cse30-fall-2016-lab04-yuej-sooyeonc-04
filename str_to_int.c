@@ -23,6 +23,7 @@ int str_to_int(char * s, int * dest)
     // Making sure neither are null
     if( s == 0 || dest == 0 )
     {
+        *dest = 0;
         return 0;
     }
     // Getting length of string and initializing other variables
@@ -33,16 +34,19 @@ int str_to_int(char * s, int * dest)
     // Making sure has at least one digit
     if( length < 1 )
     {
+        *dest = 0;
         return 0;
     }
     // Making sure that first letter is - or 0 - 9
     ch = (int) s[ 0 ];
     if( ch < 48 && ch != 45 )
     {
+        *dest = 0;
         return 0;
     }
     else if( ch > 57 )
     {
+        *dest = 0;
         return 0;
     }
     // Making sure that s is all 0 - 9 only
@@ -51,6 +55,7 @@ int str_to_int(char * s, int * dest)
         ch = (int) s[ i ];
         if( ch < 48 || ch > 57 )
         {
+            *dest = 0;
             return 0;
         }
     }
