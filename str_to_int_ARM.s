@@ -68,7 +68,8 @@ out_of_loop:
 loop_conversion:
     LDRB r3, [r7, r4]
     SUB r3, r3, #48
-    MUL r5, r5, #10
+    MOV r0, #10
+    MUL r5, r5, r0
     ADD r5, r5, r3
     ADD r4, r4, #1
     CMP r4, r2
@@ -77,7 +78,8 @@ loop_conversion:
 out_of_loop_coversion:
     LDRB r3, [r7]
     CMP r3, #45
-    MULEQ r5, r5, #-1
+    MOV r0, #-1
+    MULEQ r5, r5, r0
     
     MOV r4, #0
     CMP r4, r2
@@ -85,7 +87,8 @@ out_of_loop_coversion:
     B out_of_digit_loop
     
 digit_loop:
-    MUL r3, r3, #10 @if i < length then digit  = digit * 10
+    MOV r0, #10
+    MUL r3, r3, r0  @if i < length then digit  = digit * 10
     ADD r4, r4, #1
     CMP r4, r2
     BLT digit_loop
@@ -96,7 +99,7 @@ out_of_digit_loop:
     MOV r0, #1
     
 end:
-    ret  @should I have this ret here?
+
     
     @ This handles restoring registers and returning
     pop     {r4-r11, ip, pc}
