@@ -60,6 +60,7 @@ search_left:
     MOV r1, r5
     MOV r2, r6
     BL binary_search
+    B end
 
 return_neg_one:
     MOV r0, #-1
