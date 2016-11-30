@@ -38,7 +38,8 @@ binary_search_ARM:
     CMP r6, r7
     BGT return_neg_one
 
-    LDR r0, [r4, r3] @now r0 stores data[mid]
+    MUL r2, r3, #4
+    LDR r0, [r4, r2] @now r0 stores data[mid]
 
     CMP r0, r5
     BEQ return_mid
@@ -52,6 +53,7 @@ search_right:
     MOV r1, r5
     MOV r3, r7
     BL binary_search_ARM
+    B end
 
 search_left:
     SUB r3, r3, #1 @mid - 1 is now at r3
@@ -59,6 +61,7 @@ search_left:
     MOV r1, r5
     MOV r2, r6
     BL binary_search_ARM
+    B end
 
 return_neg_one:
     MOV r0, #-1
