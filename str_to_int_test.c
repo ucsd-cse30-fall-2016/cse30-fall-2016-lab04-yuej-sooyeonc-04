@@ -20,14 +20,14 @@ int main(int argc, char ** argv) {
         printf("Invalid integer string\n");
     }
     
-    str_to_int( "-012", &a );
-    printf("%d\n", a);
+    str_to_int( "-987", &a );
+    printf("Should be: -987 - Is: %d\n", a);
     str_to_int( "9153295", &b );
-    printf("%d\n", b);
+    printf("Should be: 9153295 - Is: %d\n", b);
     str_to_int( "10a8", &c );
-    printf("%d\n", c);
+    printf("Should be: 0 - Is: %d\n", c);
     str_to_int( "1075-2", &d );
-    printf("%d\n", d);
+    printf("Should be: 0 - Is: %d\n", d);
     
     return 0;
 }
