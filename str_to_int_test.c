@@ -12,7 +12,7 @@ int str_to_int(char * str, int * dest);
 
 int main(int argc, char ** argv) {
     
-    int x, a, b, c, d;
+    int x, a, b, c, d, e;
     
     if(str_to_int("123", &x)) {
         printf("%d\n", x);
@@ -28,6 +28,8 @@ int main(int argc, char ** argv) {
     printf("Should be: 0 - Is: %d\n", c);
     str_to_int( "1075-2", &d );
     printf("Should be: 0 - Is: %d\n", d);
+    str_to_int( "", %e );
+    printf("Should be: 0 - Is: &d\n", e);
     
     return 0;
 }
