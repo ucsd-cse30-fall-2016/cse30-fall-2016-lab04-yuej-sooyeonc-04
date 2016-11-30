@@ -5,8 +5,8 @@
 
 /* You can put constants in the .data section. Look up how to do it on your own,
  * or come ask us if you're curious!*/
-.data 
 
+.data 
 
 .text
 
@@ -18,55 +18,51 @@
 .func binary_search_ARM, binary_search_ARM
 .type binary_search_ARM, %function
 
-@questions: do we have to necessarily push r4-r11? 
-@what if I'm storing the updated value in stack in registor r0-r3?
-
 binary_search_ARM:
-    @ We need to save away a bunch of registers
+
     push    {r4-r11, ip, lr}
-    @ May need to decrement stack pointer for more stack space    
-    SUB sp, sp, #8 @it has to decrement one line as 8 bytes but we will only use mid in this case
+
+    @ - - - - - - - - - - 
     
-    SUB r6, r3, r2 @end - start
-    LSR r6, r6, #1 @half of r6
-    ADD r6, r2, r6 @mid = (end - start)/2 + start
-    STR r6, [sp] @stack pointer is now storing the new value of mid
-    
-    CMP r3, r2
-    BLE return_one
-    
-    LDR r7, [r0, r6] @data[mid]
-    CMP r7, r1
-    BEQ return_mid
-    
-    BLE loop_right
-    BGT loop_left
-    
+    @ r4 is mid
+    SUB r4, r2, r3
+    ADD r4, r5, r2
+    LSR r4, r5, #1
+
+    @ base case
+    CMP r2, r3
+    BGT end
+
+    @ r5 is data[ mid ]
+    LDR r5, [r0, r4]
+
+    @ if equal to value
+    CMP r5, r1
+    BEQ equalTo
+    BLT lessThan
+    BGT greaterThan
+
+equalTo:
+    MOV r0, r4
     B end
-    
-loop_right:   
-    SUB r6, r6 ,#1
-    MOV r3, r6
-    BL binary_search_ARM
 
-loop_left:
-    ADD r6, r6, #1
-    MOV r2, r6
-    BL binary_search_ARM
+lessThan:
+    ADD r4, r4, #1
+    MOV r2, r4
+    B end
 
-return_mid:
-    MOV r0, r6
-    
-return_one:
-    MOV r0, #-1
-    
-end:ADD sp, sp, #8
-    @ Remember to restore the stack pointer before popping!
-    @ This handles restoring registers and returning
+greaterThan:
+    SUB r4, r4, #1
+    MOV r2, r4
+    B end
+
+end:
+
+    @ - - - - - - - - - -
+   
     pop     {r4-r11, ip, pc}
+    BX lr
 
 .endfunc
 
 .end
-
-
