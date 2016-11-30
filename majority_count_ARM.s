@@ -56,6 +56,9 @@ majority_count_ARM:
     push    {r4-r11, ip, lr}
     @ May want to decrement stack pointer for more space   
     
+    
+    SUB sp, sp, #24
+    
     CMP r1, #0
     BEQ return_0
     CMP r1, #1
@@ -66,21 +69,21 @@ majority_count_ARM:
     MOV r6, r2
 
 
-    SUB sp, sp, #16
     LSR r1, r1, #1 @len/2
-    ADD r2, sp, #12
+    ADD r2, sp, #20
     BL majority_count_ARM
     MOV r3, r0 @now r3 stores left_majority_count
-    STR r0, [sp]
+    STR r0, [sp, #8]
 
-    SUB sp, sp, #8
-    ADD r0, r0, r1
+    LSR r1, r5, #1
+    ADD r0, r1, r4
     SUB r1, r5, r1
     ADD r2, sp, #16
     BL majority_count_ARM
     STR r0, [sp, #4]
     @r0 still stores right_majority_count
 
+    LDR r3, [sp, #8]
     CMP r3, #0
     BEQ skip_left
 
@@ -90,10 +93,11 @@ loop_left:
     LDR r2, [sp, #20]
     BL count_ARM
     STR r0, [sp, #12]
-    LSR r1, r1, #1
+    LSR r1, r5, #1
     CMP r0, r1
     BLE skip_left
     CMP r6, #0
+    LDRNE r2, [sp, #20]
     STRNE r2, [r6]
     B return_c
 
@@ -109,10 +113,11 @@ loop_right:
     LDR r2, [sp, #16]
     BL count_ARM
     STR r0, [sp, #12]
-    LSR r1, r1, #1
+    LSR r1, r5, #1
     CMP r0, r1
     BLE skip_right
     CMP r6, #0
+    LDRNE r2, [sp, #16]
     STRNE r2, [r6]
     B return_c
 
@@ -141,6 +146,7 @@ return_c:
     
 end:
     ADD sp, sp, #24
+    
     
     @ Remember to restore your stack pointer before popping!
     @ This handles restoring registers and returning
