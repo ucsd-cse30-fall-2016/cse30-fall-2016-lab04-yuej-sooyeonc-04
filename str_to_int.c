@@ -5,6 +5,7 @@
  * Yue Jiang (A92095681)
  * ********************************/
 
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
 
@@ -32,21 +33,25 @@ int str_to_int(char * s, int * dest)
     // Making sure has at least one digit
     if( length < 1 )
     {
-        return total;
+        return 0;
     }
     // Making sure that first letter is - or 0 - 9
     ch = (int) s[ 0 ];
-    if( ch != 45 && (ch < 48 || ch > 57) )
+    if( ch < 48 && ch != 45 )
     {
-        return total;
-    }       
+        return 0;
+    }
+    else if( ch > 57 )
+    {
+        return 0;
+    }
     // Making sure that s is all 0 - 9 only
     for( i = 1; i < length; i++ )
     {
         ch = (int) s[ i ];
         if( ch < 48 || ch > 57 )
         {
-            return total;
+            return 0;
         }
     }
     // Getting the number except the first digit
