@@ -10,10 +10,10 @@
 
 .text
 
-/* int str_to_int(char * str, int * dest);*/
-/* Return 1 for success and 0 for failure. */
-/* If successful, store the result at the */
-/* location pointed to by "dest" */
+@ int str_to_int(char * str, int * dest);
+@ Return 1 for success and 0 for failure. 
+@ If successful, store the result at the 
+@ location pointed to by "dest" 
 
 .align 8
 .global str_to_int
@@ -34,13 +34,10 @@ str_to_int:
     
     @ making sure neither s nor dest is null
     CMP r0, #0
-    BNE notNullOne
-    B endFail
-notNullOne:
+    BEQ endFail
     CMP r1, #0
-    BNE notNullEither
-    B endFail
-notNullEither:
+    BEQ endFail
+    
     @ getting string length of s
     MOV r0, r7
     BX strlen
@@ -48,12 +45,12 @@ notNullEither:
     MOV r2, r0
     @ r0 is s 
     MOV r0, r7
+    @ r1 is dest
+    MOV r8, r1
     
     @ making sure s is longer than one
     CMP r2, #1
-    BGE longEnough
-    B endFail
-longEnough:
+    BLT endFail
 
     @ r3 is i
     MOV r3, #0
@@ -153,11 +150,13 @@ powerTenEnd:
 endFail:
     MOV r10, #0
     MOV r0, #0
+    MOV r1, r8
     STR r10, [r1]
     B end
 @ when successfully convert
 endSuccess:
     MOV r0, #1
+    MOV r1, r8
     STR r5, [r1]
     
 end:
