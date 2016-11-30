@@ -38,7 +38,7 @@ majority_count_ARM:
 
 
     SUB sp, sp, #16
-    LSR r1 @len/2
+    LSR r1, r1, #1 @len/2
     ADD r2, sp, #12
     BL majority_count
     MOV r3, r0 @now r3 stores left_majority_count
@@ -64,7 +64,7 @@ loop_left:
     LDR r2, [sp, #20]
     BL count
     STR r0, [sp, #12]
-    LSR r1
+    LSR r1, r1, #1
     CMP r0, r1
     BLE skip_left
     CMP r6, #1
@@ -79,7 +79,7 @@ loop_right:
     LDR r2, [sp, #16]
     BL count
     STR r0, [sp, #12]
-    LSR r1
+    LSR r1, r1, #1
     CMP r0, r1
     BLE skip_right
     CMP r6, #1
