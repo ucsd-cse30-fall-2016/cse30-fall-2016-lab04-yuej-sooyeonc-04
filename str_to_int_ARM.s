@@ -35,15 +35,11 @@ str_to_int:
     @ making sure neither s nor dest is null
     CMP r0, #0
     BNE notNullOne
-    MOV r0, #0
-    STR #0, [r1]
-    B end
+    B endFail
 notNullOne:
     CMP r1, #0
     BNE notNullEither
-    MOV r0, #0
-    STR #0, [r1]
-    B end
+    B endFail
 notNullEither:
     @ getting string length of s
     MOV r0, r7
@@ -56,9 +52,7 @@ notNullEither:
     @ making sure s is longer than one
     CMP r2, #1
     BGE longEnough
-    MOV r0, #0
-    STR #0, [r1]
-    B end
+    B endFail
 longEnough:
 
     @ r3 is i
@@ -73,9 +67,7 @@ longEnough:
     @ checking if 9 or less first
     CMP r4, #57
     BLE firstDigitLess
-    MOV r0, #0
-    STR #0, [r1]
-    B end
+    B endFail
 firstDigitLess:
     @ checking if 0 or more
     CMP r4 #48
@@ -83,9 +75,7 @@ firstDigitLess:
     @ checking if -
     CMP r4, #45
     BEQ firstDigitCorrect
-    MOV r0, #0
-    STR #0, [r1]
-    B end
+    B endFail
 firstDigitCorrect:
     @ incrementing i
     ADD r3, r3, #1
@@ -99,16 +89,12 @@ digitCheck:
     @ checking if 0 or greater
     CMP r4, #48
     BGE digitCheckMid1
-    MOV r0, #0
-    STR #0, [r1]
-    B end
+    B endFail
 digitCheckMid1:
     @ checking if 9 or less
     CMP r4, #57
     BLE digitcheckMid2
-    MOV r0, #0
-    STR #0, [r1]
-    B end
+    B endFail
 digitCheckMid2:
     @ incrementing i
     ADD r3, r3, #i
@@ -133,7 +119,7 @@ totalLoop:
     ADD r5, r5, r4
     @ incrementing loop
     ADD r3, r3, #1
-    B totalLoop:
+    B totalLoop
 totalLoopEnd:
 
     @ the first digit
@@ -144,9 +130,7 @@ totalLoopEnd:
     @ if is -
     MOV r10, #-1
     MUL r5, r5, r10
-    MOV r0, #1
-    STR r5, [r1]
-    B end
+    B endSuccess
 notZero:
     @ if 0 - 9
     MOV r10, #10
@@ -162,6 +146,16 @@ powerTen:
 powerTenEnd:
     @ adding digit to total
     ADD r5, r5, r4
+    B endSuccess
+
+@ if is null or string is incorrect
+endFail:
+    MOV r10, #0
+    MOV r0, #0
+    STR r10, [r1]
+    B end
+@ when successfully convert
+endSuccess:
     MOV r0, #1
     STR r5, [r1]
     
