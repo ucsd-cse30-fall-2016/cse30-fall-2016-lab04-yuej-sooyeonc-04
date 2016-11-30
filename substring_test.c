@@ -22,25 +22,25 @@ int main() {
     int check = 0;
     
     check = substring( helloWorld, helloT );
-    assert( check == 1 );
+    printf( "True: %d\n", check );
     check = substring( helloT, helloWorld );
-    assert( check == 1 );
+    printf( "True: %d\n", check );
     
     check = substring( helloWorld, helloF );
-    assert( check == 0 );
+    printf( "False: %d\n", check );
     
     check = substring( helloWorld, loWoT );
-    assert( check == 1 );
+    printf( "True: %d\n", check );
     
     check = substring( helloWorld, loWoF );
-    assert( check == 0 );
+    printf( "False: %d\n", check );
     check = substring( loWoF, helloWorld );
-    assert( check == 0 );
+    printf( "False: %d\n", check );
     
     check = substring( emptyString, helloWorld );
-    assert( check == 1 );
+    printf( "True: %d\n", check );
     check = substring( nullString, helloWorld );
-    assert( check == 0 );
+    printf( "False: %d\n", check );
     
     return 0;
 }
