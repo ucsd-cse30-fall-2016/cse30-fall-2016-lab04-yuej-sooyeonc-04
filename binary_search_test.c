@@ -15,7 +15,7 @@ int main(int argc, char ** argv) {
     int test[] = { 1, 3, 5, 7, 9 };
     int x;
 
-    printf("C   Binary Search: %d\n", binary_search(data, 4, 0, 9));
+    printf("C   Binary Search: %d\n", binary_search_ARM(data, 4, 0, 9));
     printf("ARM Binary Search: %d\n", binary_search_ARM(data, 4, 0, 9));
     
     x = binary_search_ARM( data, 3, 0, 4 );
