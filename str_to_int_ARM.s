@@ -79,8 +79,9 @@ firstDigitLess:
 firstDigitCorrect:
     @ incrementing i
     ADD r3, r3, #1
-    @ making sure other digits are 0 - 9
-digitCheck:
+    
+@ making sure other digits are 0 - 9
+digitCheckStart:
     @ loop condition
     CMP r3, r2
     BGE digitCheckEnd
@@ -98,7 +99,7 @@ digitCheckMid1:
 digitCheckMid2:
     @ incrementing i
     ADD r3, r3, #i
-    B digitCheckEnd
+    B digitCheckStart
 digitCheckEnd:
 
     @ r10 is #10
