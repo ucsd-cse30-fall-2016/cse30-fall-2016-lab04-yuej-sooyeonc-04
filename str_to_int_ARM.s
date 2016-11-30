@@ -70,14 +70,17 @@ longEnough:
     
     @ making sure first digit is - or 0 - 9
     LDRB r4, [r0, r3]
+    @ checking if 9 or less first
     CMP r4, #57
     BLE firstDigitLess
     MOV r0, #0
     STR r1, #0
     B end
 firstDigitLess:
+    @ checking if 0 or more
     CMP r4 #48
     BGE firstDigitCorrect
+    @ checking if -
     CMP r4, #45
     BEQ firstDigitCorrect
     MOV r0, #0
@@ -86,12 +89,27 @@ firstDigitLess:
 firstDigitCorrect:
     @ incrementing i
     ADD r3, r3, #1
-    
     @ making sure other digits are 0 - 9
 digitCheck:
     @ loop condition
     CMP r3, r2
     BGE digitCheckEnd
+    @ getting digit
+    LDRB r4, [r0, r3]
+    @ checking if 0 or greater
+    CMP r4, #48
+    BGE digitCheckMid1
+    MOV r0, #0
+    STR r1, #0
+    B end
+digitCheckMid1:
+    @ checking if 9 or less
+    CMP r4, #57
+    BLE digitcheckMid2
+    MOV r0, #0
+    STR r1, #0
+    B end
+digitCheckMid2:
     @ incrementing i
     ADD r3, r3, #i
 digitCheckEnd:
