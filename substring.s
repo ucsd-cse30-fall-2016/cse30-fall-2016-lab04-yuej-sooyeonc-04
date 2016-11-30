@@ -37,22 +37,21 @@ substring:
     BL strlen
     MOV r8, r0
     
-checkEmpty1:
     @ check if s1 is empty string
     CMP r5, #0
-    BNE checkEmpty2
+    BNE checkEmpty
     @ if an empty string, return true
     B endTrue
-checkEmpty2:
+checkEmpty:
     @ check if s2 is empty string
-    CMP r7, #0
+    CMP r8, #0
     BNE lengthComparison
     @ if an empty string, return true
     B endTrue
 
 lengthComparison:
     @ comparing the lengths of the two strings
-    CMP r5, r7
+    CMP r5, r8
     BLE shorterFirst
     @ reordering so that shorter s is first
     MOV r0, r7
@@ -68,19 +67,26 @@ shorterFirst:
     @ now, shorter s is r4 - r6 (now s1)
     @ and, longer s is r7 - r9 (now s2)
 
+    @ r10 is s2 length - s1 length
+    SUB r10, r8, r5
+    @ getting first char of s1
+    LDRB r0, [ r4, r6 ]
+    
 @ finding where s1[ 0 ] = s2[ count2 ]
 searchLoopStart:
     @ loop condition 
-    CMP r9, r8
+    CMP r9, r10
     LGE endFail 
     @ getting char from string
-    @ r0 is s1[ count1 ]
-    LDR r0, [ r4, r8 ]
     @ r1 is s2[ count2 ]
-    LDR r1, [ r7, r9 ]
+    LDRB r1, [ r7, r9 ]
+    @ comparing s1[ 0 ] and s2[ count2 ]
+    CMP r0, r1
+    BEQ searchLoopDone
     
     @ incrementing count2 
     ADD r9, r9, #1
+    B seachLoopStart
 searchLoopDone:
     
 @ if true or false
