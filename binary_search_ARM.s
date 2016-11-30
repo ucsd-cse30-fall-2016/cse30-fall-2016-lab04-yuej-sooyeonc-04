@@ -25,15 +25,13 @@ binary_search_ARM:
     @ We need to save away a bunch of registers
     push    {r4-r11, ip, lr}
     @ May need to decrement stack pointer for more stack space    
-    SUB sp, sp, #16
-    STR r0, [sp]
-    STR r1, [sp, #4]
-    STR r2, [sp, #8]
-    STR r3, [sp, #12]
+    SUB sp, sp, #8 @it has to decrement one line as 8 bytes but we will only use mid in this case
     
     SUB r6, r3, r2 @end - start
     LSR r6 @half of r6
     ADD r6, r2, r6 @mid = (end - start)/2 + start
+    STR r6, [sp] @stack pointer is now storing the new value of mid
+    
     CMP r3, r2
     BLE return_one
     
@@ -62,7 +60,7 @@ return_mid:
 return_one:
     MOV r0, #-1
     
-end:ADD sp, sp, #16
+end:ADD sp, sp, #8
     @ Remember to restore the stack pointer before popping!
     @ This handles restoring registers and returning
     pop     {r4-r11, ip, pc}
