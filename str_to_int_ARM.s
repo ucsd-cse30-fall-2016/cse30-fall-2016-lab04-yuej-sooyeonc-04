@@ -22,7 +22,7 @@
 
 str_to_int:
 
-    @ Saving registers
+    @ We need to save away a bunch of registers
     push {r4-r11, ip, lr}
     
     @ - - - - - - - - - - 
@@ -169,7 +169,7 @@ end:
     
     @ - - - - - - - - - -
 
-    @ restoring registers and returning
+    @ This handles restoring registers and returning
     pop {r4-r11, ip, pc}
 
 .endfunc
