@@ -59,14 +59,42 @@ notNullEither:
     MOV r0, #0
     STR r1, #0
     B end
-    
 longEnough:
+
     @ r3 is i
     MOV r3, #0
     @ r4 is digit
     MOV r4, #0
     @ r5 is total
     MOV r5, #0
+    
+    @ making sure first digit is - or 0 - 9
+    LDRB r4, [r0, r3]
+    CMP r4, #57
+    BLE firstDigitLess
+    MOV r0, #0
+    STR r1, #0
+    B end
+firstDigitLess:
+    CMP r4 #48
+    BGE firstDigitCorrect
+    CMP r4, #45
+    BEQ firstDigitCorrect
+    MOV r0, #0
+    STR r1, #0
+    B end
+firstDigitCorrect:
+    @ incrementing i
+    ADD r3, r3, #1
+    
+    @ making sure other digits are 0 - 9
+digitCheck:
+    @ loop condition
+    CMP r3, r2
+    BGE digitCheckEnd
+    @ incrementing i
+    ADD r3, r3, #i
+digitCheckEnd:
     
 end:
     
