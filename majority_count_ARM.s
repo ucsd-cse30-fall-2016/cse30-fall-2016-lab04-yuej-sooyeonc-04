@@ -59,7 +59,7 @@ majority_count_ARM:
     BEQ loop_right
 
 loop_left:
-	MOV r0, r4
+    MOV r0, r4
     MOV r1, r5
     LDR r2, [sp, #20]
     BL count
@@ -74,7 +74,7 @@ loop_left:
 skip_left:
 
 loop_right:
-	MOV r0, r4
+    MOV r0, r4
     MOV r1, r5
     LDR r2, [sp, #16]
     BL count
