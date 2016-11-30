@@ -86,14 +86,10 @@ digitCheckStart:
     LDRB r4, [r0, r3]
     @ checking if 0 or greater
     CMP r4, #48
-    BGE digitCheckMid1
-    B endFail
-digitCheckMid1:
+    BGT endFail
     @ checking if 9 or less
     CMP r4, #57
-    BLE digitcheckMid2
-    B endFail
-digitCheckMid2:
+    BGT endFail
     @ incrementing i
     ADD r3, r3, #i
     B digitCheckStart
@@ -124,17 +120,17 @@ totalLoopEnd:
     LDRB r4, [r0, #0]
     @ check if - or actual number
     CMP r4, #45
-    BNE notZero
+    BNE notNeg
     @ if is -
     MOV r10, #-1
     MUL r5, r5, r10
     B endSuccess
-notZero:
+notNeg:
     @ if 0 - 9
-    MOV r10, #10
     SUB r4, r4, #48
     @ loop for multiplying digit enough
     MOV r3, #1
+    MOV r10, #10
 powerTen:
     CMP r3, r2
     BGE powerTenEnd
@@ -150,13 +146,11 @@ powerTenEnd:
 endFail:
     MOV r10, #0
     MOV r0, #0
-    MOV r1, r8
     STR r10, [r1]
     B end
 @ when successfully convert
 endSuccess:
     MOV r0, #1
-    MOV r1, r8
     STR r5, [r1]
     
 end:
