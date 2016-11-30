@@ -3,15 +3,14 @@
 
 .syntax unified
 
-/* You can put constants in the .data section. Look up how to do it on your own,
- * or come ask us if you're curious!*/
+@ You can put constants in the .data section. Look up how to do it on your own,
+@ or come ask us if you're curious! 
 
 .data 
 
 .text
 
-/*int binary_search_ARM(int * data, int toFind, int start, int end)*/
-/*Note that you return your value in r0*/
+@ int binary_search_ARM(int * data, int toFind, int start, int end) 
 
 .align 8
 .global binary_search_ARM
@@ -31,7 +30,7 @@ binary_search_ARM:
 
     @ base case
     CMP r2, r3
-    BGT end
+    BGT notHere
 
     @ r5 is data[ mid ]
     LDR r5, [r0, r4]
@@ -54,6 +53,10 @@ lessThan:
 greaterThan:
     SUB r4, r4, #1
     MOV r2, r4
+    B end
+    
+notHere:
+    MOV r0, #-1
     B end
 
 end:
