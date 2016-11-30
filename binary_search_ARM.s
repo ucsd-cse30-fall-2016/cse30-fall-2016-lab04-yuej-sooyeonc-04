@@ -52,7 +52,6 @@ search_right:
     MOV r1, r5
     MOV r3, r7
     BL binary_search
-    B end
 
 search_left:
     SUB r3, r0, #1 @mid - 1 is now at r3
@@ -60,7 +59,6 @@ search_left:
     MOV r1, r5
     MOV r2, r6
     BL binary_search
-    B end
 
 return_neg_one:
     MOV r0, #-1
