@@ -73,19 +73,19 @@ notNull:
 
 checkLength1:
     @ check if end of loop
-    CMP r, r5
+    CMP r8, r5
     BNE checkLength2
     MOV r0, #0
     B end
 checkLength2:
     @ check if end of loop
-    CMP r, r7
+    CMP r9, r7
     BNE loopAgain
     MOV r0, #0
     B end
 loopAgain:
     @ not end of loop so increment
-    ADD r, r, #1
+    ADD r9, r9, #1
     @ and get next char
     @ r0 is s1[ count ]
     LDR r0, [r4, r8]
