@@ -38,7 +38,8 @@ binary_search_ARM:
     CMP r6, r7
     BGT return_neg_one
 
-    MUL r2, r3, #4
+    MOV r2, #4
+    MUL r2, r2, r3
     LDR r0, [r4, r2] @now r0 stores data[mid]
 
     CMP r0, r5
