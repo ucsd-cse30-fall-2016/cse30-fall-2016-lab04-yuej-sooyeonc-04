@@ -19,13 +19,13 @@ int main(int argc, char ** argv) {
     printf("ARM Binary Search: %d\n", binary_search_ARM(data, 4, 0, 9));
     
     x = binary_search( data, 3, 0, 4 );
-    assert( x == 1 );
+    printf( "Should be: 1 - Is: %d\n", x );
     x = binary_search_ARM( data, 5, 0, 4 );
-    assert( x == 2 );
+    printf( "Should be: 2 - Is: %d\n", x );
     x = binary_search( data, 2, 0, 4 );
-    assert( x == -1 );
+    printf( "Should be: -1 - Is: %d\n", x );
     x = binary_search_ARM( data, 6, 0, 4 );
-    assert( x == -1 );
+    printf( "Should be: -1 - Is: %d\n", x );
     
     return 0;
 }
