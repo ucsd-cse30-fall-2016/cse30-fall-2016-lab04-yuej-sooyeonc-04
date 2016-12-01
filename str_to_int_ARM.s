@@ -54,8 +54,8 @@ skip_return_total:
 
 
     MOV r4, #1    @i = 1
-    CMP r4, r2    @i < length @QUESTION: why in your c code it's i < length instead of i<=length?
-    BLE loop 
+    CMP r4, r2    
+    BLT loop 
     B out_of_loop
     
     
@@ -67,13 +67,13 @@ loop:
     BGT end
     ADD r4, r4, #1
     CMP r4, r2
-    BLE loop
+    BLT loop
 
 out_of_loop:    
     MOV r5, #0    @total is stored in r5
     MOV r4, #1    @i = 1
     CMP r4, r2 
-    BLE loop_conversion  @I used BLE here (?)
+    BLT loop_conversion  
     B out_of_loop_conversion
     
 loop_conversion:
@@ -84,15 +84,17 @@ loop_conversion:
     ADD r5, r5, r3
     ADD r4, r4, #1
     CMP r4, r2
-    BLE loop_conversion
+    BLT loop_conversion
 
 out_of_loop_conversion:
     LDRB r3, [r7]
-    CMP r3, #45
     MOV r0, #-1
+    CMP r3, #45
     MULEQ r5, r5, r0
+    BEQ change_dest
     
-    MOV r4, #0
+    SUB r3, r3, #48 @digit is taking place of ch
+    MOV r4, #1
     CMP r4, r2
     BLT digit_loop
     B out_of_digit_loop
@@ -106,6 +108,8 @@ digit_loop:
 
 out_of_digit_loop:
     ADD r5, r5, r3
+    
+change_dest:
     STR r5, [r1] @should I use STR instead of STRB here?
     MOV r0, #1
     
