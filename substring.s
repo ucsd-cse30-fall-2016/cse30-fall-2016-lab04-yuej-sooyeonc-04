@@ -76,8 +76,6 @@ shorterFirst:
     @ getting first char of s1
     LDRB r0, [ r4, r6 ]
     
-    @ the loop where the error is :( 
-    
 @ finding where s1[ 0 ] = s2[ count2 ]
 searchLoopStart:
     @ loop condition 
@@ -91,7 +89,7 @@ searchLoopStart:
     BEQ comparisonLoopStart
     @ incrementing count2 
     ADD r9, r9, #1
-    B seachLoopStart
+    B searchLoopStart
 
 @ checking each s1[ count1 ] to s2[ count2 ]
 comparisonLoopStart:
@@ -109,8 +107,6 @@ comparisonLoopStart:
     ADD r6, r6, #1
     ADD r9, r9, #1
     B comparisonLoopStart
-    
-    @ end of where error possibly is :(
     
 @ if true or false
 endFalse:
