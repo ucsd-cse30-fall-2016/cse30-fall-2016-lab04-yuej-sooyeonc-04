@@ -111,8 +111,9 @@ out_of_digit_loop:
     ADD r5, r5, r3
     
 change_dest:
-    STR r5, [r1] @should I use STR instead of STRB here?
+    STR r5, [r9] @should I use STR instead of STRB here?
     MOV r0, #1
+    B end
     
 return_0:
     MOV r0, #0
