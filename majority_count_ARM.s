@@ -90,7 +90,7 @@ majority_count_ARM:
 loop_left:
     MOV r0, r4
     MOV r1, r5
-    LDR r2, [sp, #20]
+    ADD r2, sp, #20
     BL count_ARM
     STR r0, [sp, #12]
     LSR r1, r5, #1
@@ -110,7 +110,7 @@ skip_left:
 loop_right:
     MOV r0, r4
     MOV r1, r5
-    LDR r2, [sp, #16]
+    ADD r2, sp, #16
     BL count_ARM
     STR r0, [sp, #12]
     LSR r1, r5, #1
