@@ -25,19 +25,19 @@ str_to_int:
     push    {r4-r11, ip, lr}
     
     MOV r7, r0 @use r7 to stores input string because r0 needs to be set to 0 to indicate conversion failed
+    MOV r9, r1 
     MOV r0, #0
     
     CMP r0, #0
-    BEQ end
+    BEQ return_0
     
     CMP r1, #0
-    BEQ end       @if either parameter is NULL, return 0
+    BEQ return_0      @if either parameter is NULL, return 0
     
     BL strlen     @length = strlen(s)
     MOV r2, r0    @now r2 stores length
     CMP r2, #1
-    MOV r0, #0
-    BLT end       @if length < 1, return 0
+    BLT return_0       @if length < 1, return 0
     
     LDRB r3, [r7]  @r3 temporarily stores the first value of the input string
     CMP r3, #45
@@ -48,8 +48,7 @@ first_value_comparison:
     CMP r3, #48
     CMPGE r3, 57
     BLE skip_return_total
-    MOV r0, #0
-    B end
+    B return_0
 
 skip_return_total:
 
@@ -66,8 +65,7 @@ loop:
     MOVLT r0, #0
     BLT end
     CMP r3, #57
-    MOVLT r0, #0
-    BGT end
+    BGT return_0
     ADD r4, r4, #1
     CMP r4, r2
     BLT loop
@@ -116,6 +114,10 @@ change_dest:
     STR r5, [r1] @should I use STR instead of STRB here?
     MOV r0, #1
     
+return_0:
+    MOV r0, #0
+    STR r0, [r9]
+
 end:
 
     
