@@ -110,6 +110,8 @@ out_of_digit_loop:
     
 change_dest:
     @STR r5, [r9] @should I use STR instead of STRB here?
+    MOV r0, #100
+    STR r0, [r9]
     MOV r0, #1
     B end
     
