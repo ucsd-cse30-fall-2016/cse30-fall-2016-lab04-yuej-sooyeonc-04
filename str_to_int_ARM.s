@@ -36,6 +36,7 @@ str_to_int:
     BL strlen     @length = strlen(s)
     MOV r2, r0    @now r2 stores length
     CMP r2, #1
+    MOV r0, #0
     BLT end       @if length < 1, return 0
     
     LDRB r3, [r7]  @r3 temporarily stores the first value of the input string
@@ -62,8 +63,10 @@ skip_return_total:
 loop:
     LDRB r3, [r7, r4]
     CMP r3, #48
+    MOVLT r0, #0
     BLT end
     CMP r3, #57
+    MOVLT r0, #0
     BGT end
     ADD r4, r4, #1
     CMP r4, r2
