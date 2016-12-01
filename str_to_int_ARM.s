@@ -39,16 +39,6 @@ str_to_int:
     CMP r2, #1
     BLT return_0       @if length < 1, return 0
     
-    LDRB r3, [r7]  @r3 temporarily stores the first value of the input string
-    CMP r3, #45
-    BNE first_value_comparison
-    B skip_return_total
-    
-first_value_comparison:
-    CMP r3, #48
-    BLT return_0
-    CMP r3, #57
-    BGT return_0
 
 skip_return_total:
     MOV r4, #1    @i = 1
