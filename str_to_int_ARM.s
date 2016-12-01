@@ -50,6 +50,7 @@ first_value_comparison:
     CMP r3, #57
     BGT return_0
 
+skip_return_total:
     MOV r4, #1    @i = 1
     CMP r4, r2    
     BLT loop 
