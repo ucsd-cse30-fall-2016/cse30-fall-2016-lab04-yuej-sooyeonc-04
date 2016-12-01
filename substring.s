@@ -80,7 +80,7 @@ shorterFirst:
 searchLoopStart:
     @ loop condition 
     CMP r9, r10
-    BGE endFalse 
+    BGT endFalse 
     @ getting char from string
     @ r1 is s2[ count2 ]
     LDRB r1, [ r7, r9 ]
