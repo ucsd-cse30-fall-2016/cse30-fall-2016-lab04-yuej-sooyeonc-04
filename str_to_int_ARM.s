@@ -46,12 +46,9 @@ str_to_int:
     
 first_value_comparison:
     CMP r3, #48
-    CMPGE r3, 57
-    BLE skip_return_total
-    B return_0
-
-skip_return_total:
-
+    BLT return_0
+    CMP r3, #57
+    BGT return_0
 
     MOV r4, #1    @i = 1
     CMP r4, r2    
