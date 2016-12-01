@@ -76,11 +76,13 @@ shorterFirst:
     @ getting first char of s1
     LDRB r0, [ r4, r6 ]
     
+    @ the loop where the error is :( 
+    
 @ finding where s1[ 0 ] = s2[ count2 ]
 searchLoopStart:
     @ loop condition 
     CMP r9, r10
-    LGT endFalse 
+    BGE endFalse 
     @ getting char from string
     @ r1 is s2[ count2 ]
     LDRB r1, [ r7, r9 ]
@@ -107,6 +109,8 @@ comparisonLoopStart:
     ADD r6, r6, #1
     ADD r9, r9, #1
     B comparisonLoopStart
+    
+    @ end of where error possibly is :(
     
 @ if true or false
 endFalse:
