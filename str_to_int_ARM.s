@@ -26,7 +26,6 @@ str_to_int:
     
     MOV r7, r0 @use r7 to stores input string because r0 needs to be set to 0 to indicate conversion failed
     MOV r9, r1 
-    MOV r0, #0
     
     CMP r0, #0
     BEQ return_0
@@ -109,8 +108,7 @@ out_of_digit_loop:
     ADD r5, r5, r3
     
 change_dest:
-    @STR r5, [r9] @should I use STR instead of STRB here?
-    MOV r9, #100
+    STR r5, [r9] @should I use STR instead of STRB here?
     MOV r0, #1
     B end
     
