@@ -57,7 +57,15 @@ skip_return_total:
     B out_of_loop
     
     
-loop:
+loop:   
+    LDRB r3, [r7, r4]
+    CMP r3, #48
+    BLT return_0
+    CMP r3, #57
+    BGT return_0
+    ADD r4, r4, #1
+    CMP r4, r2
+    BLT loop
 
 
 out_of_loop:    
